@@ -1,3 +1,7 @@
+---
+title: Jabber/XMPP - the past, the present & the future
+theme: league
+---
 # Jabber/XMPP
 ### the past, the present & the future
 [Daniel Gultsch](https://gultsch.de)
@@ -86,7 +90,6 @@ Note: In case you haven’t used XMPP in recent years
 * OMEMO: Forward secrecy
 * PGP: Server side archive
 
-
 ---
 
 # 2017
@@ -113,6 +116,13 @@ Note: In case you haven’t used XMPP in recent years
 * XEP-0333
 * small changes to XEP
 * *Read to this point* UI
+
+---
+
+### Message Styling
+* Not markdown
+* Italic, bold, strikthrough & monospace
+* Inspired by WhatsApp & Slack
 
 ---
 
