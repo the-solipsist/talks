@@ -75,13 +75,17 @@ Transports work fine for very limited protocols like IRC where your own protocol
 
 <p><small>¹ When using a modern client and server</small></p>
 
-Note: In case you haven’t used XMPP in recent years  
+Note: In case you haven’t used XMPP in recent years let me summarize the years leading up to 2016 very briefly with a simple: Jabber nowadays has every feature you would expect from a modern messaging app. It is reliable. Messages don’t get lost if you loose connectivity for while. It synchroize across different devices; you can transfer images and other media files. It has support for group chats. And it has support for End-to-end encryption.
+
+I say all that with the small foot note that you have to use an up to date client; You can’t use a multi protocol messenger that hasn’t been updated in years and expect those features to work.
 
 ----
 
 ### State of Mobile XMPP in 2016
 * [gultsch.de/xmpp_2016.html](https://gultsch.de/xmpp_2016.html)
 * XMPP talk @ FrOSCon 2015, [media.ccc.de](https://media.ccc.de/v/froscon2015-1548-xmpp_2015_-_challenges_of_modern_day_instant_messaging)
+
+Note: If you want to know more on how that works check out the article I wrote on the State of Mobile XMPP 2016 or watch the talk I gave at FrOSCon 2015.
 
 ----
 
@@ -90,9 +94,19 @@ Note: In case you haven’t used XMPP in recent years
 * OMEMO: Forward secrecy
 * PGP: Server side archive
 
+Note: I just quickly want to reiterate on something that has been explained a couple of times before in other places but that still causes confusion for people: The question of why are there multiple encryption choices in Jabber. 
+
+OMEMO is an encryption that works similiar to the one found in WhatsApp, Signal or Matrix. It has the trait of forward secrecy; which means that even if you are in possession of the private key you can only ever decrypt one particular message once. This might come in handy when the NSA steels your phone or what ever but it also prevents you from keeping a server side archive.
+
+PGP on the other hand doesn’t have that and might be »less secure« but it just as well keeps the snooping sys admin of your Jabber server from reading your messages while still allowing you to have full access to your entire history when setting up a new device.
+
+And of course there is the choice of not encrypting messages at all. When I talk to my dad on Jabber and we both use the same Jabber server that is running on a Rasberry Pie in my living room there is absolutetly no reason what so ever to encrypt my messages and I much rather utilize tools like server side search.
+
 ---
 
 # 2017
+
+Note: Any way let’s get to the new things that were introduced this year.
 
 ---
 
@@ -101,6 +115,8 @@ Note: In case you haven’t used XMPP in recent years
 * Domain name / certificate selection
 * Faster
 * Public WiFi / Port 443
+
+Note:  
 
 ---
 
