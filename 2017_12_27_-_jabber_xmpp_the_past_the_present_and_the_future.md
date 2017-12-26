@@ -116,7 +116,14 @@ Note: Any way let’s get to the new things that were introduced this year.
 * Faster
 * Public WiFi / Port 443
 
-Note:  
+Note: When trying to establish a TLS connection to a server the client somehow needs to signal what domain it wants to connect to let the server pick the right certificate for that domain. TLS for a long time couldn’t do that on itself so if you wanted to have more than one domain on one server you’d have to use a technique called STARTTLS where the client first establishes a plain connection, signals what domain it wants to talk to and then switches over to TLS.
+XMPP isn’t alone with that. Other protocols like IMAP or LDAP have the same thing.
+
+TLS by now has learned to do that by itself with an extension of its own called SNI making STARTTLS a bit obsolete.
+
+The primary benefits of using what is called »Direct TLS« is that it makes connection a bit faster by saving you the intial round trip. More importantly though does it allow you to run your XMPP server on port 443 with TLS encryption making the traffic difficult to be distinguished from HTTPS traffic which increases your chances to connect from Airport hotspots and Hotel Wifis.
+
+Some of the XMPP servers don’t actually support SNI though yet. So if you want to run multiple domains on the same IP address you need to put an SSL multiplexer in front of your XMPP server that listens on port 443 and redirects the traffic to different ports on your XMPP server - one for each domain name.
 
 ---
 
@@ -126,6 +133,12 @@ Note:
 * Might become important on Android
 * Server support / Proxies over App server
 
+Note: Push is actually a feature that found it’s way into the clients in 2016 and I already wrote about that in my [The State of Mobile XMPP in 2016](https://gultsch.de/xmpp_2016.html) article but 2017 was the year in which we got server support for it and saw adoption in the wild.
+
+Push is currently only needed on iOS which can not maintain a persistent TCP connection to the server. Push needs server support and it can trigger a push notification when something happens. Servers can’t issue a push notification directly only the app developer can. So the server tells the app developer which then sends a push notification. Both the app developer and the push network (Apple or Google) only see that something happen. They don’t see the content of the message or who send the message. Technically it doesn’t even mean it was a message.
+
+Maybe at some point this will also be required on Android so it’s good to gain some experience with the technology and already have server side support.
+
 ---
 
 ## Group chat read markers
@@ -133,12 +146,26 @@ Note:
 * small changes to XEP
 * *Read to this point* UI
 
+Note: Conversations has had chat markers in 1:1 chats for a while now. Chat markers signal the other party that the contact has read up to a certain point in a conversation but can also be used to remove a pending notification on one device if the messages have been read on another device.
+
+About a month ago I also implemented this for group chats. The »has read up to this point« UI has the benefit over the »blue checkmark« logic found in WhatsApp that you can also see if people in a group chat have read other messages. In WhatsApp this only works for messages you have sent yourself.
+
+I just made a small change compared to the already existing XEP to make it work in group chats. In the original XEP your chat markers only reference the ID of the original message. Now message IDs are only unique per sender not globally unique. So when sending a chat marker back to a group chat Conversations will also include the sender of the message.
+
+I still have to write that change down though and get it accepted into the official XEP.
+
+While I’m at it I also want to change another detail of the XEP. Right now chat markers are only send out if the sender of the original message has requested them. This poses a problem in group chats: While the original sender might not have interest in getting read markers other participants in that group chat might. The same problem occurs when I want to use chat markers to dismiss notifications on other devices. This currently only works if the sender has requested them. So my proposal is to change the XEP to send out read markers opportunisticly all the time.
+
 ---
 
 ### Message Styling
 * Not markdown
-* Italic, bold, strikthrough & monospace
+* Italic, bold, strikethrough & monospace
 * Inspired by WhatsApp & Slack
+
+Note: Another small little feature was introduced this year into Conversations and written down as a XEP and that’s the ability to use text styling like italic, bold, strikethrough and monospace. It was heavily influenced by WhatsApp and Slack and uses the same syntax. Star for bold, underline for italic, the tilde (~) for strikethrough and backticks (`) for monespace.
+
+Interestingly WhatsApp and Slack do not have the same parsing rules when it comes to nesting or other details. XMPP has tried to find a good middleground between an easy ruleset - as in easy to implement - that doesn’t have too many false positves. Theoretically other instant messaging system could implement the same ruleset to make transports work a little better.
 
 ---
 
@@ -146,11 +173,19 @@ Note:
 * Two »competing« standards
 * One simple solution
 
+Note: Avatars are unfortunatly one of those areas where there are two solutions to the same problem. However resolving that issue is surprisingly easy.
+
+Let me describe the two standards first.
+
 ----
 
 ### XEP 0084: User Avatars
 * efficient interface
 * only contacts can access
+
+Note: XEP-0084 is the standard that has been implemented in Conversations for years. It uses a general purpose mechanism called Personal Eventing Protocol or PEP for short. It allows users to publish information about themselves like their avatar but also other kind of information like what music they are listening to right now or what location they are at. Contacts can then express interest in what kind of information they are interested in and then will automatically receive updates if that information changes. A client doesn’t have to express interest in all information a contact has. For example if my client can’t display the location or the music a contact is listening to that client won’t receive that information; thus keeping the traffic to a minimum.
+
+However this mechanism by default only works for contacts. Avatars published using PEP won’t be accessible to non contacts. Thus it won’t work in group chats.
 
 ----
 
@@ -158,9 +193,15 @@ Note:
 * Data is public
 * works in group chats
 
+Note: XEP-0153, despite the number, is actually the older extension of the two. It doesn’t use PEP as a backend but a custom server side storage that is only being used for vcards.
+There is no server side access control in front of that storage so everyone - even none contacts can access it.
+On the upside this works in group chats. On the downsides the way this extension was designed is that it requires the owner of the avatar to download their own avatar from the server on every connect, calculate the SHA-1 hash and put this into their own presence. Especially on mobile clients that might connect fairly frequently this creates a lot of unnecessary traffic. 
+
 ----
 
 ### XEP-xxxx: User Avatar to vCard-Based Avatars Conversion
+
+Note: 
 
 ---
 
