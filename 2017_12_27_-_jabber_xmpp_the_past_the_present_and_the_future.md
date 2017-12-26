@@ -201,11 +201,17 @@ On the upside this works in group chats. On the downsides the way this extension
 
 ### XEP-xxxx: User Avatar to vCard-Based Avatars Conversion
 
-Note: 
+Note: The way around this problem is fairly simple though. The
+ server can copy every avatar uploaded into PEP to vCard storage and also take care of the hash calculation.
+
+This is actually nothing new; Some servers have already been doing this for a while now. Prosody is currently only missing the hash calculation part.
+Anyway I set down last week and put this into an actual XEP that is currently pending review.
 
 ---
 
 # Future
+
+Note: Now let’s take a look into what’s coming in the near future.
 
 ---
 
@@ -213,6 +219,15 @@ Note:
 * Easier trust model
 * World readable keys
 * Deployment
+
+Note: It has been a long term goal of mine to make OMEMO the default encryption in Conversations. However this isn’t as simple as flipping a switch. There are a couple of things that needed to be fixed in order to actually make this viable.
+The first thing was that we needed to introduce an easier trust model. OMEMO when it first was implemented would keep asking the user to confirm the fingerprint for every new device. That’s too complicated for inexperienced users.
+
+The second problem we had was that OMEMO was only working with people in your contact list. Which not only makes this difficult in group chats but also prevents the first »Hello« message that happens before people add each other to their contact list.
+
+And most importantly OMEMO needed to see some adoption. You can’t make an encryption default that is not support by the recipient.
+
+Let’s look at all these problem in more detail.
 
 ----
 
@@ -223,17 +238,37 @@ Note:
  * Trust new keys
  * After scanning a contact, stop trusting new keys from that contact
 
+Note: Like I said OMEMO at first would keep asking the user to confirm every new device a contact might get. So if I get a new phone or install a new operating system or what ever all may contacts would be prompted a screen asking them to confirm the fingerprint of the new device. The same thing would happen on initial contact. My contacts would have to confirm all keys. One for every device I own.
+
+TOFU was not really a solution. TOFU can help to eliminate the very first confirmation screen but doesn’t work for subsequent devices. And subsequent devices happen fairly frequently in a mobile world where people reinstall or get new phones rather frequently. And a contact doesn’t have the possibilty of checking this for plausibility. If I get a »keys changed« warning on SSH I usually know if I have reinstalled the server and can ignore the warning. With contacts I usually don’t know if they have gotten a new phone or testing out a new client or what ever. This led to everyone just accepting keys all time.
+
+Last year I introduced »Blind Trust Before Verification« that’s sort of a middle ground between just trusting everything and »Trust on first use« and works like that. It will blindly trust any device on first connect. It will also blindly trust subsequent devices. In short it would do exactly what users have been doing anyway.
+
+But by scanning the QR code of a contact you can upgrade a »trusted« contact to a »verified« contact. By doing this you proof two things: 1) You know how to scan QR codes and are somewhat interested in verifying contacts and 2) you have the access to the QR code. Either because you know the contact in person and scan their QR code of their screen or because that contact has published the QR code on their social media or what ever.
+
+From that point onwards Conversations won’t automatically trust new keys from that contact anymore because it assumes that you have a way of verifying keys.
+
 ----
 
 ### World readable keys
 * `publish_options`
 * `mod_omemo_all_access`
 
+Note: world readable keys - meaning making OMEMO work with people not in your contact list - was by far the most challenging problem to solve.
+
+OMEMO uses PEP - that’s the same server side storage that’s also used by avatars. As I said before when we were talking about avatars the storage is only available to contacts. However the XEP describes a method of changing the access model from contacts-only to open. This wasn’t implemented in any of the servers though.
+
+ejabberd will get support for this in the next release which is actually scheduled for this month.
+
+Prosody still hasn’t support for this. However I wrote a server side module that simply turns of access control entirly for everything related to OMEMO. It’s called omemo_all_access and should be available in the official community module repository soon and is already available on my github.
+
 ----
 
 ### Deployment
 * Every plattform has at least on client
 * [omemo.top](https://omemo.top)
+
+Note: Another thing that was kind of ouf my control was that for OMEMO to be sucessful we need at least one OMEMO capable client for every plattform. That goal has been reached. You can track the progress a different OMEMO implementations on [omemo.top](http://omemo.top).
 
 ---
 
@@ -242,12 +277,18 @@ Note:
 * Doesn’t work with multiple devices
 * Auto response loops
 
+Note: Also on my bucket list for quite some while is that OTR must go away. It doesn’t work reliable and can even be dangerours when it gets into auto response loops.
+
+The gajim developers have annouced that they are not planning on porting their plugin over to the Python 3 / GTK 3 release. New clients like dino don’t even implement it in the first place. Support for it will be removed from Conversations this year.
+
 ---
 
 ## Image Thumbnails
 * XEP-0385: Stateless Inline Media Sharing
 * OMEMO: Data URIs
 * Size limit (10,000 bytes)
+
+Note: I’m not a huge fan of making feature annoucements for Conversations until I have actually implemented them. But Ithink that I will start experimenting with thumbnails for images and videos.
 
 ---
 
