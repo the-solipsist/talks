@@ -288,7 +288,11 @@ The gajim developers have annouced that they are not planning on porting their p
 * OMEMO: Data URIs
 * Size limit (10,000 bytes)
 
-Note: I’m not a huge fan of making feature annoucements for Conversations until I have actually implemented them. But Ithink that I will start experimenting with thumbnails for images and videos.
+Note: I’m not a huge fan of making feature annoucements for Conversations until I have actually implemented them. But Ithink that I will start experimenting with thumbnails for images and videos. Especially for larger files that are not downloaded automatically or for group chats where files aren’t automatically downloaded either this can be a pretty neat feature.
+For unencrypted messages there is a XEP which can attach a lot of meta information to shared media like file type and size and also thumbnails. Thumbnails are base64 encoded and are a part of the actual message. No download necessary.
+Unfortunately there is a size limit of 10.000 bytes for the entire message which leaves about 2KiB for the actual image. So thumbnails will probably be pretty blurry. But so are thumbnails in WhatsApp.
+
+In OMEMO we can only encrypt the body and not XML so we will probably just send a data url along side the encrypted URL for the content. This has the added benefit that even clients that do not support this will probably allow you to just click the data URI and open it in a browser.
 
 ---
 
@@ -296,11 +300,8 @@ Note: I’m not a huge fan of making feature annoucements for Conversations unti
 * Initial login / discovery expensive
 * Resume requires TLS and SASL
 
----
-
-## Message routing
-* Delivery to multiple devices
-* Offline delivery / catchup
+Note: One thing that isn’t necessarily a feature that will be visible to the user but keeps bothering me is the amout of time and traffic it takes for an initial connect. Login with SASL alone requires a few round trips. And discovering and negotiating features is also pretty time consuming.
+There won’t be a single solution to solve all that it will probably be a combination of a few smaller steps but that’s where I see a lot of potential for optimization.
 
 ---
 
@@ -309,6 +310,18 @@ Note: I’m not a huge fan of making feature annoucements for Conversations unti
 * Be careful about publishing your JID
 * Blocking made easy / No notifications
 * [Spam Reduction on yax.im](https://yaxim.org/blog/2017/12/22/spam-reduction-on-yax-dot-im/)
+
+Note: One problem that especially concerns people who have been involved in the XMPP community for a while is SPAM. Some users see a lot of spam. In XMPP it’s either you are on one of the two lists the spammers keep using or you aren’t. if you are you get a lot of spam. Like multiple messages a day. If you aren’t you don’t get any spam at all.
+
+Spam is mostly from russian cyber criminals advertaising credit card data, ddos services and stuff like that. A lot of the spam is in Russian. So it’s fair to assume most of us aren’t actually the target audience of that spam. Anyway it can be quite annoying.
+
+Conversations has switched to a model where it doesn’t notify you for messages from strangers which means not in contact list and not responsed to. So you only see the messages when you open Conversations. It has also made it easier to block people and simultainously report them as spam.
+
+It can be quite annoying for server operators though because they have to handle a lot more messages.
+
+From a user perspective the only recommendation is to be careful about where you publish your Jabber ID and if you do use the same obfuscation you use with your email address. Even though I personally don’t have any evidence that the spammers are actually crawling the internet for Jabber IDs. It seems that there are getting their addresses from hacked forums and something like that.
+
+If you want to read a server admins perspective and how you can filter spam on the server side go read the blog post from the yax.im admin.
 
 ---
 
