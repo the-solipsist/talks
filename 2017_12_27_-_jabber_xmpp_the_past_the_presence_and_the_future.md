@@ -3,7 +3,7 @@ title: Jabber/XMPP - the past, the present & the future
 theme: league
 ---
 # Jabber/XMPP
-### the past, the present & the future
+### the past, the presence & the future
 [Daniel Gultsch](https://gultsch.de)
 <p><small>December 27th 2017 @ 34C3</small></p>
 
