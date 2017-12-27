@@ -361,3 +361,6 @@ March 24th, 2018
 [@iNPUTmice](https://twitter.com/inputmice)
 
 [gultsch.de](https://gultsch.de)
+
+
+<p><small><a href="https://github.com/iNPUTmice/talks">github.com/iNPUTmice/talks</a><small></p>
