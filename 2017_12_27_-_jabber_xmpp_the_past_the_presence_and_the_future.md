@@ -16,9 +16,9 @@ theme: league
 
 Note: After being a Jabber User for more than a decade I started working on my own Jabber client four years ago and later became actively involved in the XMPP community.
 
-While there are many reasons for using Jabber instead of WhatsApp or Signal by personal motivation is that I don’t want a single company to control my communication. Not only do companys like Facebook see whom I communicating with they can also control whom I’m communicating with. Or even worse; stop me from communicating at all.
+While there are many reasons for using Jabber instead of WhatsApp or Signal, my personal motivation is that I don’t want a single company to control my communication. Not only do companys like Facebook see whom I communicating with - they can also control whom I’m communicating with. Or even worse; stop me from communicating at all.
 
-Or to put this in other words; I don’t want to get in a Twitter-fight with Moxie only to wake up one morning and not being able to use Signal anymore. And this has nothing to do with being paranoid. Companies have kicked people of their networks before. There is this interview with the CEO of cloudflare where he describes that he woke up one morning and decided to [take the daily stormer of the internet](https://www.youtube.com/watch?v=ULXWJgmhP1c).
+Or to put this in other words; I don’t want to get in a Twitter-fight with Moxie only to wake up one morning and not being able to use Signal anymore. And this has nothing to do with being paranoid. Companies have kicked people of their networks before. There is this interview with the CEO of cloudflare where he describes that he woke up one morning and just decided to [take the daily stormer of the internet](https://www.youtube.com/watch?v=ULXWJgmhP1c).
 
 This is also the point where just being open source doesn’t help you at all. If Moxie decides he doesn’t want me to use Signal there is absolutely no benefit in Signal being open source. Yes I can setup my own server. But nobody else would be using that server.
 
@@ -35,7 +35,7 @@ Note: So what is Jabber/XMPP and does it help us to take back our control?
 Jabber is federated, provider independent instant messaging. Just like in email users are identified by username@provider and can freely choose a combination of client and provider since every client will work with every provider.
 Clients are usually not developed by the same companies that act as providers.
 
-The base protocol is published as an IETF standard that can easily be extended. Extensions are published by the XMPP Standards Foundation. I say published because standards are not written by the XSF. The XSF just provides the common framework and the standarization path. Extensions can be written by anyone. Although of course a lot of people who write extensions are also involved in the XSF.
+The base protocol is published as an IETF standard that can easily be extended. Extensions are published by the XMPP Standards Foundation. I say published because standards are not written by the XSF. The XSF just provides the common framework and the path to standarization. Extensions can be written by anyone. Although of course a lot of people who write extensions are also involved in the XSF.
 
 ----
 
@@ -54,7 +54,7 @@ XMPP is just the protocol. So when a company like Facebook or HipChat create an 
 * Gateways are flawed
 
 Note: Just to get ahead of the question that some of you will have at the end of that talk; Whats the difference between Jabber vs Matrix or which one is better?
-I’ve personally never really used Matrix so I’m not the right person to ask. They have similar goals and if either one of those ends up taking away the power Facebook and Google have over us I’m happy.
+I’ve personally never really used Matrix so I’m not the right person to ask. They have similar goals and if either one of those ends up taking away some of the  power Facebook and Google have over us I’m happy.
 
 Use what ever you prefer.
 
@@ -94,7 +94,7 @@ Note: If you want to know more on how that works check out the article I wrote o
 * OMEMO: Forward secrecy
 * PGP: Server side archive
 
-Note: I just quickly want to reiterate on something that has been explained a couple of times before in other places but that still causes confusion for people: The question of why are there multiple encryption choices in Jabber. 
+Note: I just quickly want to reiterate on something that has been explained a couple of times before in other places but that still confuses people: The question of why are there multiple encryption choices in Jabber. 
 
 OMEMO is an encryption that works similiar to the one found in WhatsApp, Signal or Matrix. It has the trait of forward secrecy; which means that even if you are in possession of the private key you can only ever decrypt one particular message once. This might come in handy when the NSA steels your phone or what ever but it also prevents you from keeping a server side archive.
 
@@ -163,9 +163,9 @@ While I’m at it I also want to change another detail of the XEP. Right now cha
 * Italic, bold, strikethrough & monospace
 * Inspired by WhatsApp & Slack
 
-Note: Another small little feature was introduced this year into Conversations and written down as a XEP and that’s the ability to use text styling like italic, bold, strikethrough and monospace. It was heavily influenced by WhatsApp and Slack and uses the same syntax. Star for bold, underline for italic, the tilde (~) for strikethrough and backticks (`) for monespace.
+Note: Another small feature introduced this year into Conversations and written down as a XEP and that’s the ability to use text styling like italic, bold, strikethrough and monospace. It was heavily influenced by WhatsApp and Slack and uses the same syntax. Star for bold, underline for italic, the tilde (~) for strikethrough and backticks (`) for monespace.
 
-Interestingly WhatsApp and Slack do not have the same parsing rules when it comes to nesting or other details. XMPP has tried to find a good middleground between an easy ruleset - as in easy to implement - that doesn’t have too many false positves. Theoretically other instant messaging system could implement the same ruleset to make transports work a little better.
+Interestingly WhatsApp and Slack do not have the same parsing rules when it comes to nesting or other details. We tried to find a good middleground between an easy ruleset - as in easy to implement - that doesn’t have too many false positves. Theoretically other instant messaging system could implement the same ruleset to make transports work a little better.
 
 ---
 
@@ -195,7 +195,7 @@ However this mechanism by default only works for contacts. Avatars published usi
 
 Note: XEP-0153, despite the number, is actually the older extension of the two. It doesn’t use PEP as a backend but a custom server side storage that is only being used for vcards.
 There is no server side access control in front of that storage so everyone - even none contacts can access it.
-On the upside this works in group chats. On the downsides the way this extension was designed is that it requires the owner of the avatar to download their own avatar from the server on every connect, calculate the SHA-1 hash and put this into their own presence. Especially on mobile clients that might connect fairly frequently this creates a lot of unnecessary traffic. 
+On the upside this works in group chats. On the downsides the way this extension was designed is that it requires the owner of the avatar to download their own avatar from the server on every connect, calculate the SHA-1 hash and put the hash into their own presence. Especially on mobile clients that connect fairly frequently this creates a lot of unnecessary traffic. 
 
 ----
 
@@ -242,7 +242,7 @@ Note: Like I said OMEMO at first would keep asking the user to confirm every new
 
 TOFU was not really a solution. TOFU can help to eliminate the very first confirmation screen but doesn’t work for subsequent devices. And subsequent devices happen fairly frequently in a mobile world where people reinstall or get new phones rather frequently. And a contact doesn’t have the possibilty of checking this for plausibility. If I get a »keys changed« warning on SSH I usually know if I have reinstalled the server and can ignore the warning. With contacts I usually don’t know if they have gotten a new phone or testing out a new client or what ever. This led to everyone just accepting keys all time.
 
-Last year I introduced »Blind Trust Before Verification« that’s sort of a middle ground between just trusting everything and »Trust on first use« and works like that. It will blindly trust any device on first connect. It will also blindly trust subsequent devices. In short it would do exactly what users have been doing anyway.
+Last year I introduced »Blind Trust Before Verification« that’s sort of a middle ground between just trusting everything and »Trust on first use« and works like that. It will blindly trust any device on first connect. It will also blindly trust subsequent devices. In short it does exactly what users would have been doing anyway.
 
 But by scanning the QR code of a contact you can upgrade a »trusted« contact to a »verified« contact. By doing this you proof two things: 1) You know how to scan QR codes and are somewhat interested in verifying contacts and 2) you have the access to the QR code. Either because you know the contact in person and scan their QR code of their screen or because that contact has published the QR code on their social media or what ever.
 
