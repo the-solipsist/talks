@@ -96,7 +96,7 @@ Note: If you want to know more on how that works check out the article I wrote o
 
 Note: I just quickly want to reiterate on something that has been explained a couple of times before in other places but that still confuses people: The question of why are there multiple encryption choices in Jabber. 
 
-OMEMO is an encryption that works similiar to the one found in WhatsApp, Signal or Matrix. It has the trait of forward secrecy; which means that even if you are in possession of the private key you can only ever decrypt one particular message once. This might come in handy when the NSA steels your phone or what ever but it also prevents you from keeping a server side archive.
+OMEMO is an encryption that works similiar to the one found in WhatsApp, Signal or Matrix. It has the trait of forward secrecy; which means that even if you are in possession of the private key you can only ever decrypt one particular message once. This might come in handy when the NSA steals your phone or whatever but it also prevents you from keeping a server side archive.
 
 PGP on the other hand doesn’t have that and might be »less secure« but it just as well keeps the snooping sys admin of your Jabber server from reading your messages while still allowing you to have full access to your entire history when setting up a new device.
 
