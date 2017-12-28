@@ -265,10 +265,10 @@ Prosody still hasn’t support for this. However I wrote a server side module th
 ----
 
 ### Deployment
-* Every plattform has at least on client
+* Every platform has at least one client
 * [omemo.top](https://omemo.top)
 
-Note: Another thing that was kind of ouf my control was that for OMEMO to be sucessful we need at least one OMEMO capable client for every plattform. That goal has been reached. You can track the progress a different OMEMO implementations on [omemo.top](http://omemo.top).
+Note: Another thing that was kind of out of my control was that for OMEMO to be successful we need at least one OMEMO-capable client for every plattform. That goal has been reached. You can track the progress of different OMEMO implementations on [omemo.top](http://omemo.top).
 
 ---
 
